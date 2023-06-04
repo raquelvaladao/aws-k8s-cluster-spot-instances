@@ -1,12 +1,12 @@
 # Spot-instances K8S cluster
 
-- This is a learning-purpose side project that follows along with kubernetes-the-hard-way tutorial, but instead of GKE and direct API usage, I used a Spot-instances fleet with Terraform as infrastructure provider.
+- This is a learning-purpose side project that follows along with [kubernetes-the-hard-way tutorial](https://github.com/kelseyhightower/kubernetes-the-hard-way), but instead of GKE and direct API usage, I used a Spot-instances fleet with Terraform as infrastructure provider.
 
 - There are also networking configs, leveraging components such as VPCs, public/private subnets, route tables, ASGs, user-data and bastion hosts.
 
 - This is a small simulation of EKS architecture.
 
-## Architecture (actual)
+## Architecture (current)
 ![Complete architecture](./imgs/architecture.jpg)
 
 ## Modules
@@ -36,7 +36,7 @@ Listing and describing the main outputs provided by the module.
 
 
 ### Bootstraping module
-WIP .... 
+**WIP ....**
 
 
 ## Side-notes / important
