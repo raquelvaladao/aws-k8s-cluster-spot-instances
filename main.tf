@@ -27,3 +27,11 @@ module "networking" {
   bastion_username = var.bastion_username
   kube_port_api    = var.kube_port_api
 }
+
+module "bootstraping" {
+  source = "./modules/bootstraping"
+
+  worker_instances_private_ips = module.networking.worker_instances_private_ips
+  master_instances_private_ips = module.networking.master_instances_private_ips
+  bastion_ip                   = module.networking.bastion_ip
+}

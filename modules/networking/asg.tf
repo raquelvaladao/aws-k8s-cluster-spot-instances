@@ -87,16 +87,6 @@ resource "aws_autoscaling_group" "asg_master" {
   }
 }
 
-
-data "aws_instances" "workers" {
-  instance_tags = {
-    Name = "${var.cluster_name}"
-  }
-
-  depends_on = [aws_autoscaling_group.asg_workers]
-}
-
-
 resource "aws_launch_template" "launch_template_worker" {
   name                   = "worker-lt"
   description            = "worker launch template"
@@ -165,4 +155,20 @@ data "template_file" "httpd_template" {
   I'm on Availability Zone $(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)" > /var/www/html/index.html
   service httpd start
   EOF
+}
+
+data "aws_instances" "workers_instances" {
+  filter {
+    name   = "tag:Name"
+    values = ["*-workers"]
+  }
+  depends_on = [aws_autoscaling_group.asg_workers]
+}
+
+data "aws_instances" "master_instances" {
+  filter {
+    name   = "tag:Name"
+    values = ["*-master"]
+  }
+  depends_on = [aws_autoscaling_group.asg_master]
 }
