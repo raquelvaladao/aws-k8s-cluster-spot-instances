@@ -17,11 +17,21 @@ data "template_file" "file" {
   #!/bin/bash
   yum update -y
   amazon-linux-extras install epel -y
-  yum -y install httpd jq  
-  echo "TEST! 
-  My instance-id is $(curl -s http://169.254.169.254/latest/meta-data/instance-id)
-  My instance type is $(curl -s http://169.254.169.254/latest/meta-data/instance-type)
-  I'm on Availability Zone $(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)" > /var/www/html/index.html
-  service httpd start
+  sudo yum -y install jq gcc openssl-devel
+  sudo yum groupinstall "Development tools" -y
+  cd
+  sudo wget http://ftp.gnu.org/gnu/wget/wget-1.16.tar.gz
+  sudo tar -xzf wget-1.16.tar.gz
+  cd wget-1.16
+  sudo ./configure --with-ssl=openssl
+  sudo make && sudo make install
+  cd
+  sudo curl -s -L -o /bin/cfssl https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
+  sudo curl -s -L -o /bin/cfssljson https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
+  sudo curl -s -L -o /bin/cfssl-certinfo https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64
+  sudo chmod +x /bin/cfssl*
+  sudo wget https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kubectl
+  sudo chmod +x kubectl
+  sudo mv kubectl /usr/local/bin/
   EOF
 }
