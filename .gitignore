@@ -1,0 +1,7 @@
+*.auto.tfvars
+backend.conf
+terraform.*
+.terraform
+.terraform.*
+todo.*
+v1
